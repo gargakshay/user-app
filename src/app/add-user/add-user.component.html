@@ -1,0 +1,117 @@
+<!-- For showing data table -->
+<p-dataTable [value]="userDataList">
+  <p-header>
+    <button pButton type="button" label="Add User" title="Add User" (click)="addUser()" icon="fa-plus"></button>
+  </p-header>
+  <p-column field="firstName" header="First Name Last Name">
+    <ng-template let-col let-user="rowData">
+      {{user['firstName'] + " " + user['lastName'] }}
+    </ng-template>
+  </p-column>
+  <p-column field="emailId" header="Email Id"></p-column>
+  <p-column field="dob" header="DOB"></p-column>
+  <p-column field="userType" header="User Type"></p-column>
+  <p-column field="userStatus" header="Action"></p-column>
+  <p-column [style]="{'width':'10%'}">
+    <ng-template pTemplate="header">
+      Actions
+    </ng-template>
+    <ng-template let-rowData="rowData" pTemplate="body">
+      <button pButton type="button" title="View User" (click)="showUser(rowData)" icon="fa-user"></button>
+      <button pButton type="button" title="Edit User" (click)="editUser(rowData)" icon="fa-pencil"></button>
+      <button pButton type="button" class="ui-button-danger" title="Delete User" (click)="deleteUser(rowData)" icon="fa-trash"></button>
+    </ng-template>
+  </p-column>
+</p-dataTable>
+
+<!-- For showing dialog box -->
+<p-dialog header="{{mode}} User Detail" *ngIf="isUserDisplay" [(visible)]="isUserDisplay" width="800">
+  <form (ngSubmit)="addEditUser()" #groupForm="ngForm" ngNativeValidate>
+    <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid" style="margin: 10px 0px">
+      <div class="ui-grid-row">
+        <div class="ui-grid-col-4">
+          First Name *:
+        </div>
+        <div class="ui-grid-col-8">
+          <input pInputText type="text" placeholder="Required" [(ngModel)]="userDetail.firstName" name="firstName" [disabled]="isReadOnly"
+            required ngModel/>
+        </div>
+      </div>
+
+      <div class="ui-grid-row">
+        <div class="ui-grid-col-4">
+          Last Name *:
+        </div>
+        <div class="ui-grid-col-8">
+          <input pInputText type="text" placeholder="Required" [(ngModel)]="userDetail.lastName" name="lastName" [disabled]="isReadOnly"
+            required ngModel/>
+        </div>
+      </div>
+
+      <div class="ui-grid-row">
+        <div class="ui-grid-col-4">
+          Email Id *:
+        </div>
+        <div class="ui-grid-col-8">
+          <input pInputText type="email" placeholder="Required" [(ngModel)]="userDetail.emailId" name="emailId" [disabled]="isReadOnly"
+            required ngModel/>
+        </div>
+      </div>
+
+      <div class="ui-grid-row">
+        <div class="ui-grid-col-4">
+          Password *:
+        </div>
+        <div class="ui-grid-col-8">
+          <input pInputText type="password" placeholder="Required" [(ngModel)]="userDetail.password" name="password" [disabled]="isReadOnly"
+            required ngModel/>
+        </div>
+      </div>
+
+      <div class="ui-grid-row">
+        <div class="ui-grid-col-4">
+          DOB :
+        </div>
+        <div class="ui-grid-col-8">
+          <input pInputText type="date" [(ngModel)]="userDetail.dob" name="dob" [disabled]="isReadOnly" ngModel/>
+        </div>
+      </div>
+
+      <div class="ui-grid-row">
+        <div class="ui-grid-col-4">
+          City *:
+        </div>
+        <div class="ui-grid-col-8">
+          <input pInputText type="text" placeholder="Required" [(ngModel)]="userDetail.city" name="city" [disabled]="isReadOnly" required
+            ngModel/>
+        </div>
+      </div>
+
+      <div class="ui-grid-row">
+        <div class="ui-grid-col-4">
+          User Type *:
+        </div>
+        <div class="ui-grid-col-8">
+          <p-dropdown name="userType" [options]="userTypeSelectItem" appendTo="body" [style]="{width: '185px'}" [(ngModel)]="userDetail.userType"
+            [disabled]="isReadOnly" required ngModel></p-dropdown>
+        </div>
+      </div>
+
+      <div class="ui-grid-row">
+        <div class="ui-grid-col-4">
+          User Status *:
+        </div>
+        <div class="ui-grid-col-8">
+          <p-dropdown name="userStatus" [options]="userStatusSelectItem" appendTo="body" [style]="{width: '185px'}" [(ngModel)]="userDetail.userStatus"
+            [disabled]="isReadOnly" required ngModel></p-dropdown>
+        </div>
+      </div>
+    </div>
+    <div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
+      <button type="submit" pButton icon="fa-check" label="OK"></button>
+      <button type="button" pButton icon="fa-close" (click)="closeDialog()" label="Cancel"></button>
+    </div>
+  </form>
+</p-dialog>
+
+<p-growl [value]="msgs" life="3000"></p-growl>
