@@ -4,14 +4,14 @@
     <button pButton type="button" label="Add User" title="Add User" (click)="addUser()" icon="fa-plus"></button>
   </p-header>
   <p-column field="firstName" header="First Name Last Name">
-    <ng-template let-col let-user="rowData">
+    <ng-template let-col let-user="rowData" pTemplate="body">
       {{user['firstName'] + " " + user['lastName'] }}
     </ng-template>
   </p-column>
   <p-column field="emailId" header="Email Id"></p-column>
+  <p-column field="city" header="City"></p-column>
   <p-column field="dob" header="DOB"></p-column>
   <p-column field="userType" header="User Type"></p-column>
-  <p-column field="userStatus" header="Action"></p-column>
   <p-column [style]="{'width':'10%'}">
     <ng-template pTemplate="header">
       Actions
